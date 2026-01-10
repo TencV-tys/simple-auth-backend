@@ -37,7 +37,7 @@ class AuthController{
             
          }catch(e){
              res.status(500).json({
-                message:"Signup failed"
+                message:"Signup failed" 
              });
          }
 

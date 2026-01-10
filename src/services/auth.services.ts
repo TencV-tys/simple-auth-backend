@@ -26,7 +26,7 @@ export class AuthServices{
                 where:{email}
              });
 
-             if(!existingUser)return{success:false,message:"Email already exists"};
+             if(existingUser)return{success:false,message:"Email already exists"};
 
              const hashedPassword = await bcrypt.hash(password,10);
 
@@ -80,9 +80,9 @@ export class AuthServices{
         });
         if(!user)return {success:false,message:"Invalid credentials"};
         
-        const userFound = await bcrypt.compare(password,user.password);
+        const isPasswordValid = await bcrypt.compare(password,user.password);
 
-        if(!userFound) return {success:false,message:"User not found"};
+        if(!isPasswordValid) return {success:false,message:"Invalid password"};
 
         const token = this.generateToken(user.id,user.role);
 
