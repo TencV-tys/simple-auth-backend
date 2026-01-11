@@ -90,7 +90,7 @@ export class AuthServices{
             success:true,
             message:"Login successfully",
             token,
-            user:{
+            user:{ 
                 id:user.id,
                 name:user.name,
                 email:user.email,
@@ -135,7 +135,7 @@ export class AuthServices{
             success:true,
             message:"Logged out successfully"
            }
-        }catch(e){
+        }catch(e){ 
            return {
             success:false,
             message:"Logout Failed"

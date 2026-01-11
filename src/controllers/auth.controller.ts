@@ -11,6 +11,7 @@ class AuthController{
                 
               if(!result.success){
                 return res.status(400).json({
+                  success:false,
                   message:result.message
                 });
               }
@@ -18,6 +19,7 @@ class AuthController{
          
                if(!result.token){
                 return res.status(500).json({
+                  success:false,
                   message:"Token generation failed"
                 });
                }
@@ -30,6 +32,7 @@ class AuthController{
                });
 
                res.status(201).json({
+                success:true,
                 message:result.message,
                 user:result.user
               });
@@ -37,6 +40,7 @@ class AuthController{
             
          }catch(e){
              res.status(500).json({
+              success:false,
                 message:"Signup failed" 
              });
          }
@@ -51,11 +55,13 @@ class AuthController{
 
         if(!result.success){
           return res.status(400).json({
+            success:false,
             message:result.message
           })
         }
        if(!result.token){
         return res.status(500).json({
+          success:false,
           message:"Token generation failed"
         });
        }
@@ -68,13 +74,16 @@ class AuthController{
 
 
         res.json({
+          success:true,
           message:result.message,
           user:result.user
         });
 
        }catch(e){
         console.error("Login controller failed");
-            res.status(500).json({message:"Login Failed"});
+            res.status(500).json({
+              success:false,
+              message:"Login Failed"});
          }
 
      }
@@ -90,17 +99,21 @@ class AuthController{
           await AuthServices.logout(payload.userId);
         }
        } 
-
+          res.json({
+            success:true,
+            message:"Logged out successfully"
+          })
       }catch(e){
           console.error(`Error in Logged out controller`);
           res.status(500).json({
+            success:false,
             message:"Internal server error"
           })        
       }
 
      }
 
-
+ 
      static async getCurrentUser(req:Request, res:Response){
           try{
                 const token = req.cookies.accessToken;
@@ -109,9 +122,10 @@ class AuthController{
 
                 if(!result.success){
                   return res.status(401).json({
+                    success:false,
                     message:result.message
                   })
-                }
+                } 
 
                 res.json({
                   success:true,
@@ -119,7 +133,7 @@ class AuthController{
                 })
 
           }catch(e){
-                console.error("Getcurent user",e);
+                console.error("Get curent user",e);
                 res.status(500).json({
                   message:"Internal server error"
                 });
