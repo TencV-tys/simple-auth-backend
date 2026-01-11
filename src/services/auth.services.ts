@@ -143,4 +143,45 @@ export class AuthServices{
         }
     }
 
+    static async getCurrentUser(token:string):Promise<any>{
+                try{
+                     if(!token) return {
+                        success:false,
+                        message:"Not authenticated"
+                     }
+                     
+                     const payload = this.verifyToken(token);
+
+                     if(!payload) return{
+                        success:false,
+                        message:"Invalid token"
+                     }
+                    
+                     const user = await prisma.user.findUnique({
+                        where:{id:payload.userId},
+                        select:{id:true, name:true, email:true,role:true}
+                     });
+
+                     if(!user){
+                        return{
+                            success:false,
+                            message:"User not found"
+                        }
+                     }
+
+                     return {
+                        success:true,
+                        user:user
+                     }
+                }catch(e){
+                    console.error(e);
+                    return {
+                        success:false,
+                        message:"Server error"
+                    }
+                }
+        
+
+    }
+
 }

@@ -20,5 +20,5 @@ router.get('/admin', authMiddleware,requireRole("ADMIN"),(req,res)=>{
 })
 
 router.post('/logout',AuthController.logout);
-
+router.get('/me',AuthController.getCurrentUser);
 export default router;

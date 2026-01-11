@@ -101,6 +101,32 @@ class AuthController{
      }
 
 
+     static async getCurrentUser(req:Request, res:Response){
+          try{
+                const token = req.cookies.accessToken;
+                 
+                const result = await AuthServices.getCurrentUser(token);
+
+                if(!result.success){
+                  return res.status(401).json({
+                    message:result.message
+                  })
+                }
+
+                res.json({
+                  success:true,
+                  user:result.user
+                })
+
+          }catch(e){
+                console.error("Getcurent user",e);
+                res.status(500).json({
+                  message:"Internal server error"
+                });
+          }
+
+     }
+
 
 
 }
