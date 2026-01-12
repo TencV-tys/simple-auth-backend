@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from 'dotenv';
 import authRoutes from "./routes/auth.routes";
+import adminRoutes from './routes/admin.routes';
 import cookieParser from "cookie-parser";
 import cors from 'cors';
 dotenv.config();
@@ -14,7 +15,7 @@ server.use(cors({
 }));
 
 server.use("/api/auth", authRoutes);
-
+server.use("/api/admin",adminRoutes);
 const PORT = process.env.PORT || 3001;
 
 server.listen(PORT,()=>{

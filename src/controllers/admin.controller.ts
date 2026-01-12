@@ -1,0 +1,68 @@
+import { Request,Response } from "express";
+import { AdminServices } from "../services/admin.services";
+
+export class AdminController{
+
+         static async getAllUsers(req:Request,res:Response){
+             try{
+                 
+                const userResult = await AdminServices.getAllUser();
+                
+                if(!userResult.success)return res.status(401).json({
+                    success:false,
+                    message:userResult.message
+                })
+
+                return res.json({
+                    success:true,
+                    message:userResult.message,
+                    user:userResult
+                })
+
+
+              }catch(e){
+                console.error(e);
+                return res.status(500).json({
+                    success:false,
+                    message:"Server error"
+                })
+             }
+
+                
+
+         }
+              
+
+         static async getDeleteUser(req:Request, res:Response){
+              try{
+                   const {userId} = req.params;
+                   
+                   const result = await AdminServices.deleteUser(parseInt(userId));
+
+                   if(!result.success){
+                    res.status(401).json({
+                        success:false,
+                        message:result.message
+                    });
+                   }
+
+
+                   res.json({
+                      success:true,
+                      message:result.message
+                   });
+                   
+                
+              }catch(e){
+                console.error(e);
+                res.status(500).json({
+                    success:true,
+                    message:"Server error"
+                });
+              }
+              
+
+         }
+
+
+}
