@@ -16,6 +16,7 @@ server.use(cors({
 
 server.use("/api/auth", authRoutes);
 server.use("/api/admin",adminRoutes);
+
 const PORT = process.env.PORT || 3001;
 
 server.listen(PORT,()=>{

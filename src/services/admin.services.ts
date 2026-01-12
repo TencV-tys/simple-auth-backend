@@ -20,6 +20,7 @@ export class AdminServices{
                
                return{
                 success:true,
+                message:"User fetched successfully",
                 user:users
                }
 
@@ -71,6 +72,6 @@ export class AdminServices{
       }
 
     
-
+ 
 
 }

@@ -16,7 +16,7 @@ export class AdminController{
                 return res.json({
                     success:true,
                     message:userResult.message,
-                    user:userResult
+                    user:userResult.user
                 })
 
 

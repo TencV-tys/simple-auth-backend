@@ -1,8 +1,13 @@
 {
   "name": "express-mvc-ts",
   "version": "1.0.0",
+  "prisma":{
+      "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "seed": "npx prisma db seed",
+    "seed:dev": "npx prisma db push --force-reset && npm run seed"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
