@@ -2,9 +2,14 @@ import prisma from "../prisma";
 
 export class AdminServices{
 
-      static async getAllUser(){
+      static async getAllUser(page:number = 1, limit:number = 10 ){
            
         try{
+
+                 const skip = (page - 1) * limit;
+                
+                 const totalUsers = await prisma.user.count()
+
                const users = await prisma.user.findMany({
                 select:{
                     id:true,
@@ -15,13 +20,25 @@ export class AdminServices{
                 },
                 orderBy:{
                     createdAt:'desc'
-                }
+                },
+                skip:skip,
+                take:limit
                });
                
+                  const totalPages = Math.ceil(totalUsers/limit);
+
                return{
                 success:true,
                 message:"User fetched successfully",
-                user:users
+                user:users,
+                pagination:{
+                  currentPage:page,
+                  totalPages: totalPages,
+                  totalUsers: totalUsers,
+                  hasNextPage: page < totalPages,
+                  hasPrevPage: page > 1
+
+                }
                }
 
         }catch(e){
