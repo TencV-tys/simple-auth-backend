@@ -6,7 +6,11 @@ export class AdminController{
          static async getAllUsers(req:Request,res:Response){
              try{
                  
-                const userResult = await AdminServices.getAllUser();
+              const page = parseInt(req.query.page as string) || 1;
+              const limit = parseInt(req.query.limit as string ) || 10;
+
+
+                const userResult = await AdminServices.getAllUser(page,limit);
                 
                 if(!userResult.success)return res.status(401).json({
                     success:false,
@@ -16,7 +20,8 @@ export class AdminController{
                 return res.json({
                     success:true,
                     message:userResult.message,
-                    user:userResult.user
+                    user:userResult.user,
+                    pagination:userResult.pagination
                 })
 
 
